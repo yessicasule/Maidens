@@ -1,19 +1,48 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+const Button = ({ children, className }) => (
+    <button className={`px-6 py-3 rounded-lg text-lg shadow-lg transition ${className}`}>
+      {children}
+    </button>
+  );
+  
 
-const Home = () => {
+export default function Home() {
     return (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-600">
-            <motion.div
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className="text-center text-white p-8 bg-white bg-opacity-10 backdrop-blur-md rounded-2xl shadow-lg"
+        <div className="relative w-full h-screen overflow-hidden">
+            {/* Background Story Video */}
+            <video
+                autoPlay
+                loop
+                muted
+                className="absolute inset-0 w-full h-full object-cover"
             >
-                <h1 className="text-5xl font-bold mb-4">Welcome to NoMaien</h1>
-                <p className="text-lg">Your gateway to innovation and technology</p>
-            </motion.div>
+                <source src="/assets/story.mp4" type="video/mp4" />
+            </video>
+
+            {/* Overlay Content */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-50">
+                <motion.h1
+                    className="text-5xl font-bold mb-4 text-center"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    Welcome to the Galactic Code Academy 🚀
+                </motion.h1>
+
+                <motion.p
+                    className="text-lg text-center max-w-2xl mb-6"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                    Embark on an interstellar journey where coding unlocks the mysteries of the universe. Solve challenges, explore planets, and become a master cadet in the Galactic Code Academy!
+                </motion.p>
+
+                <Button className="bg-yellow-400 text-black px-6 py-3 rounded-lg text-lg shadow-lg hover:bg-yellow-300 transition">
+                    Get Started
+                </Button>
+            </div>
         </div>
     );
-};
-
-export default Home;
+}
