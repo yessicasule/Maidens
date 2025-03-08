@@ -4,12 +4,12 @@ import { FaRocket } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const challenges = [
-  { id: 1, difficulty: "Easy", x: "15%", y: "50%" },
-  { id: 2, difficulty: "Normal", x: "30%", y: "30%" },
-  { id: 3, difficulty: "Medium", x: "50%", y: "60%" },
-  { id: 4, difficulty: "Hard", x: "70%", y: "40%" },
-  { id: 5, difficulty: "Very Hard", x: "85%", y: "70%" },
-  { id: 6, difficulty: "Extreme", x: "90%", y: "20%" }
+  { id: 1, difficulty: "Naboo", x: "15%", y: "50%" },
+  { id: 2, difficulty: "Mustafar", x: "30%", y: "30%" },
+  { id: 3, difficulty: "Hoth", x: "50%", y: "60%" },
+  { id: 4, difficulty: "Jakku", x: "70%", y: "40%" },
+  { id: 5, difficulty: "Dabogah", x: "85%", y: "70%" },
+  { id: 6, difficulty: "Tatooine", x: "90%", y: "20%" }
 ];
 
 const SpaceMap = () => {
