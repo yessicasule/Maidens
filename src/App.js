@@ -1,34 +1,27 @@
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import StorylineScreen from './pages/StoryLineScreen';
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
-
 
 function App() {
-
-
-
   return (
-    <>
-      <BrowserRouter>
-        <RoutesWeb />
-      </BrowserRouter>
-    </>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
-const RoutesWeb = () => {
+const AppRoutes = () => {
   const location = useLocation(); // Get the current route
-
+  
   return (
     <>
       {/* {loading && <Loader />} */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/storyline" element = {<StorylineScreen/>}></>
+        <Route path="/storyline" element={<StorylineScreen />} />
       </Routes>
-      {/* {!isAdminRoute && <Footer />}       Conditionally render Footer */}
+      {/* {!isAdminRoute && <Footer />} 
+      Conditionally render Footer */}
     </>
   );
 };
