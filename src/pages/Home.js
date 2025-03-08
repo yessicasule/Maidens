@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'
 
 const SpaceButton = ({ children, className }) => (
+const AsteroidButton = ({ children, className, onClick }) => (
     <motion.button
         className={`relative px-8 py-4 text-xl font-bold rounded-lg overflow-hidden ${className}`}
+        onClick={onClick}
+        className={`relative px-8 py-4 rounded-full text-xl font-bold text-white shadow-xl overflow-hidden ${className}`}
         initial={{ scale: 0.9 }}
         whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         whileTap={{ scale: 0.95 }}
@@ -26,14 +30,8 @@ const SpaceButton = ({ children, className }) => (
 
 // Replace the AsteroidButton with SpaceButton in the Home component
 export default function Home() {
+    const navigate = useNavigate();
     const [stars, setStars] = useState([]);
-    const spaceEmojis = ['🚀', '🛸', '👽', '🪐', '💫', '✨', '☄️', '🌠', '🌌', '👨‍🚀', '👩‍🚀', '🤖', '👾', '🌟'];
-    const neonGlows = [
-        { top: '20%', left: '10%', color: 'radial-gradient(circle, rgba(167,139,250,1) 0%, rgba(79,70,229,0) 70%)', size: '300px', delay: 0 },
-        { top: '50%', left: '80%', color: 'radial-gradient(circle, rgba(56,189,248,1) 0%, rgba(2,132,199,0) 70%)', size: '400px', delay: 1 },
-        { top: '70%', left: '30%', color: 'radial-gradient(circle, rgba(244,114,182,1) 0%, rgba(219,39,119,0) 70%)', size: '350px', delay: 2 },
-        { top: '10%', left: '70%', color: 'radial-gradient(circle, rgba(34,211,238,1) 0%, rgba(8,145,178,0) 70%)', size: '250px', delay: 1.5 },
-    ];
 
     // Component definitions for Star, NeonGlow, and SpaceCharacter remain the same
     const Star = ({ delay = 0 }) => {
@@ -104,29 +102,31 @@ export default function Home() {
     };
 
     useEffect(() => {
-        setStars(Array.from({ length: 150 }).map((_, i) => <Star key={i} delay={i * 0.01} />));
+        setStars(Array.from({ length: 150 }).map((_, i) => (
+            <motion.div
+                key={i}
+                className="absolute rounded-full bg-white shadow-glow"
+                style={{
+                    width: `${Math.random() * 3 + 1}px`,
+                    height: `${Math.random() * 3 + 1}px`,
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
+                transition={{ duration: Math.random() * 3 + 2, repeat: Infinity, repeatType: "reverse" }}
+            />
+        )));
     }, []);
 
     return (
         <div className="relative w-full h-screen overflow-hidden bg-black">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-950 via-blue-950 to-black opacity-90"></div>
 
-            {/* Neon glows */}
-            {neonGlows.map((glow, index) => (
-                <NeonGlow key={index} {...glow} />
-            ))}
-
             {/* Stars */}
             {stars}
 
-            {/* Space emojis */}
-            {spaceEmojis.map((emoji, index) => (
-                <SpaceCharacter key={index} emoji={emoji} delay={index * 0.5} />
-            ))}
-
             <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-radial from-transparent to-black opacity-40"></div>
-
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
                     <motion.h1
                         className="text-6xl md:text-7xl font-black mb-8 text-center flex items-center gap-3 heading-glow"
@@ -169,11 +169,13 @@ export default function Home() {
                         transition={{ delay: 1.5, duration: 0.5 }}
                     >
                         <SpaceButton className="button-pulse">Get Started</SpaceButton>
+                        <AsteroidButton className="neon-shadow" onClick={() => navigate('/storyline')}>
+                            Get Started
+                        </AsteroidButton>
                     </motion.div>
                 </div>
             </div>
 
-            {/* CSS for additional effects */}
             <style jsx global>{`
         .button-pulse {
           animation: buttonPulse 4s infinite alternate;
