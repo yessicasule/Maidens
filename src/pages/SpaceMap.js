@@ -212,5 +212,4 @@ const SpaceMap = () => {
     </div>
   );
 };
-
 export default SpaceMap;
