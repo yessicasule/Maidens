@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function FirstChallenge() {
   const [output, setOutput] = useState("");
@@ -7,16 +6,12 @@ export default function FirstChallenge() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [hasAttempted, setHasAttempted] = useState(false);
   const [errorLine, setErrorLine] = useState(null);
-  
-  const navigate = useNavigate();
 
   const handleRunCode = () => {
     setHasAttempted(true);
     setErrorLine(null);
 
-    const trimmedCode = userCode.trim();
-
-    if (trimmedCode === 'print("Start Engine!")') {
+    if (userCode.trim() === 'print("Start Engine!")') {
       setOutput("🚀 Spaceship Launched! Welcome to the Galactic Code Academy!");
       setIsCorrect(true);
 
@@ -25,8 +20,6 @@ export default function FirstChallenge() {
     } else {
       setOutput("❌ Error: Syntax incorrect. Check your command.");
       setIsCorrect(false);
-
-      // Find the incorrect line
       const lines = userCode.split("\n");
       for (let i = 0; i < lines.length; i++) {
         if (lines[i].trim() !== 'print("Start Engine!")') {
@@ -38,54 +31,76 @@ export default function FirstChallenge() {
   };
 
   const handleNextChallenge = () => {
-    navigate("/challenge/2");
+    alert("🔜 Moving to the next challenge... (Implement navigation here!)");
   };
 
   const handleCodeChange = (e) => {
     setUserCode(e.target.value);
-    setErrorLine(null); // Remove red dot when user starts typing again
+    setErrorLine(null);
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-black text-white p-6">
-      <h1 className="text-4xl font-bold neon-text mb-4">🚀 First Challenge: Start the Spaceship! 🛸</h1>
-      <p className="text-lg mb-6">Write a Python command that prints "Start Engine!" to launch.</p>
+      <h1 className="text-4xl font-bold neon-text mb-4">🚀 Galactic Code Academy</h1>
 
-      <div className="relative w-96">
-        {errorLine !== null && (
-          <div className="absolute left-2 top-3 text-red-500 font-bold">🔴</div>
-        )}
-        <textarea
-          className={`w-full h-24 p-2 mt-4 rounded-lg shadow-lg text-black ${
-            hasAttempted && !isCorrect ? "border-2 border-red-500" : ""
+      {/* Level Selection */}
+      <div className="flex space-x-4 mb-6">
+        <button
+          className={`px-4 py-2 text-lg rounded ${
+            currentLevel === 1 ? "bg-blue-500 text-white" : "bg-gray-700 text-gray-400"
           }`}
-          placeholder='Example: print("Start Engine!")'
-          value={userCode}
-          onChange={handleCodeChange}
-          disabled={isCorrect}
-        ></textarea>
+          onClick={() => setCurrentLevel(1)}
+        >
+          Level 1
+        </button>
+        <button
+          className={`px-4 py-2 text-lg rounded ${
+            unlockedLevels.includes(2) ? "bg-green-500 text-white" : "bg-gray-700 text-gray-400 opacity-50"
+          }`}
+          onClick={() => unlockedLevels.includes(2) && setCurrentLevel(2)}
+          disabled={!unlockedLevels.includes(2)}
+        >
+          Level 2
+        </button>
       </div>
 
-      {!isCorrect ? (
-        <button
-          onClick={handleRunCode}
-          className="mt-4 px-6 py-3 bg-blue-600 text-white text-xl font-bold rounded-full shadow-md hover:bg-blue-700 transition"
-        >
-          Run Code 🚀
-        </button>
-      ) : (
-        <button
-          onClick={handleNextChallenge}
-          className="mt-4 px-6 py-3 bg-green-600 text-white text-xl font-bold rounded-full shadow-md hover:bg-green-700 transition"
-        >
-          Next Challenge ➡
-        </button>
-      )}
+      {currentLevel === 1 ? (
+        <>
+          <p className="text-lg mb-6">Write a Python command to launch the spaceship.</p>
+          <textarea
+            className={`w-full h-24 p-2 rounded-lg text-black ${
+              hasAttempted && !isCorrect ? "border-2 border-red-500" : ""
+            }`}
+            placeholder='Example: print("Start Engine!")'
+            value={userCode}
+            onChange={handleCodeChange}
+            disabled={isCorrect}
+          ></textarea>
 
-      {output && (
-        <p className={`mt-6 text-xl ${output.includes("Error") ? "text-red-500" : "text-green-400"}`}>
-          {output}
-        </p>
+          {!isCorrect ? (
+            <button
+              onClick={handleRunCode}
+              className="mt-4 px-6 py-3 bg-blue-600 text-white text-xl font-bold rounded-full shadow-md hover:bg-blue-700 transition"
+            >
+              Run Code 🚀
+            </button>
+          ) : (
+            <button
+              onClick={handleNextChallenge}
+              className="mt-4 px-6 py-3 bg-green-600 text-white text-xl font-bold rounded-full shadow-md hover:bg-green-700 transition"
+            >
+              Next Challenge ➡
+            </button>
+          )}
+
+          {output && (
+            <p className={`mt-6 text-xl ${output.includes("Error") ? "text-red-500" : "text-green-400"}`}>
+              {output}
+            </p>
+          )}
+        </>
+      ) : (
+        <SecondChallenge />
       )}
 
       <style jsx>{`
