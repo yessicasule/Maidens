@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'
 
-const SpaceButton = ({ children, className }) => (
 const AsteroidButton = ({ children, className, onClick }) => (
     <motion.button
-        className={`relative px-8 py-4 text-xl font-bold rounded-lg overflow-hidden ${className}`}
-        onClick={onClick}
         className={`relative px-8 py-4 rounded-full text-xl font-bold text-white shadow-xl overflow-hidden ${className}`}
+        onClick={onClick}
         initial={{ scale: 0.9 }}
         whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         whileTap={{ scale: 0.95 }}
@@ -28,12 +25,10 @@ const AsteroidButton = ({ children, className, onClick }) => (
     </motion.button>
 );
 
-// Replace the AsteroidButton with SpaceButton in the Home component
 export default function Home() {
     const navigate = useNavigate();
     const [stars, setStars] = useState([]);
 
-    // Component definitions for Star, NeonGlow, and SpaceCharacter remain the same
     const Star = ({ delay = 0 }) => {
         const size = Math.random() * 3 + 1;
         const top = Math.random() * 100;
@@ -103,19 +98,7 @@ export default function Home() {
 
     useEffect(() => {
         setStars(Array.from({ length: 150 }).map((_, i) => (
-            <motion.div
-                key={i}
-                className="absolute rounded-full bg-white shadow-glow"
-                style={{
-                    width: `${Math.random() * 3 + 1}px`,
-                    height: `${Math.random() * 3 + 1}px`,
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
-                transition={{ duration: Math.random() * 3 + 2, repeat: Infinity, repeatType: "reverse" }}
-            />
+            <Star key={i} delay={Math.random() * 2} />
         )));
     }, []);
 
@@ -168,8 +151,7 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.5, duration: 0.5 }}
                     >
-                        <SpaceButton className="button-pulse">Get Started</SpaceButton>
-                        <AsteroidButton className="neon-shadow" onClick={() => navigate('/storyline')}>
+                        <AsteroidButton className="button-pulse" onClick={() => navigate('/storyline')}>
                             Get Started
                         </AsteroidButton>
                     </motion.div>
