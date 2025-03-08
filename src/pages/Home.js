@@ -1,90 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'
 
-const AsteroidButton = ({ children, className }) => (
+const SpaceButton = ({ children, className }) => (
     <motion.button
-        className={`relative px-8 py-4 rounded-full text-xl font-bold text-white shadow-xl overflow-hidden ${className}`}
+        className={`relative px-8 py-4 text-xl font-bold rounded-lg overflow-hidden ${className}`}
         initial={{ scale: 0.9 }}
-        whileHover={{ scale: 1.05, rotate: [0, -1, 1, -1, 0], transition: { duration: 0.3 } }}
+        whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         whileTap={{ scale: 0.95 }}
+        style={{
+            color: '#67e8f9',
+            textShadow: '0 0 10px #22d3ee, 0 0 15px #0ea5e9, 0 0 20px #38bdf8',
+            boxShadow: '0 0 15px 2px rgba(34, 211, 238, 0.4), 0 0 30px 5px rgba(6, 182, 212, 0.3)',
+            border: '2px solid rgba(103, 232, 249, 0.6)',
+            background: 'rgba(8, 47, 73, 0.5)',
+        }}
     >
-        <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500 via-blue-600 to-violet-600 opacity-90"></div>
-        <div className="absolute w-4 h-4 rounded-full bg-cyan-300 opacity-80 top-2 left-4 blur-sm"></div>
-        <div className="absolute w-3 h-3 rounded-full bg-pink-300 opacity-80 bottom-3 right-6 blur-sm"></div>
-        <div className="absolute w-2 h-2 rounded-full bg-purple-300 opacity-80 top-6 right-8 blur-sm"></div>
-        <span className="relative z-10 text-white font-extrabold drop-shadow-md flex items-center justify-center gap-2 text-shadow">
-            <span>💫</span> {children} <span>🚀</span>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-cyan-900/30 to-indigo-900/20"></div>
+        <div className="absolute w-full h-full opacity-10 bg-noise"></div>
+        <span className="relative z-10 font-extrabold flex items-center justify-center gap-2">
+            <span>☄️</span> {children}
         </span>
     </motion.button>
 );
 
-const Star = ({ delay = 0 }) => {
-    const size = Math.random() * 3 + 1;
-    const top = Math.random() * 100;
-    const left = Math.random() * 100;
-    const duration = Math.random() * 3 + 2;
-    const color = [
-        'bg-cyan-300', 'bg-blue-300', 'bg-purple-300',
-        'bg-pink-300', 'bg-indigo-300'
-    ][Math.floor(Math.random() * 5)];
-
-    return (
-        <motion.div
-            className={`absolute rounded-full ${color} shadow-glow`}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                top: `${top}%`,
-                left: `${left}%`,
-                boxShadow: `0 0 8px 2px rgba(${color === 'bg-cyan-300' ? '6, 182, 212' :
-                    color === 'bg-blue-300' ? '59, 130, 246' :
-                        color === 'bg-purple-300' ? '168, 85, 247' :
-                            color === 'bg-pink-300' ? '236, 72, 153' : '99, 102, 241'}, 0.7)`
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
-            transition={{ duration, delay, repeat: Infinity, repeatType: "reverse" }}
-        />
-    );
-};
-
-const NeonGlow = ({ top, left, color, size, delay }) => (
-    <motion.div
-        className="absolute rounded-full blur-xl"
-        style={{
-            width: size,
-            height: size,
-            top,
-            left,
-            background: color,
-            opacity: 0.3
-        }}
-        initial={{ opacity: 0.2, scale: 0.8 }}
-        animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.1, 0.8] }}
-        transition={{ duration: 4, delay, repeat: Infinity }}
-    />
-);
-
-const SpaceCharacter = ({ emoji, delay = 0 }) => {
-    const startPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
-    const endPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
-
-    return (
-        <motion.div
-            className="absolute text-2xl"
-            style={{
-                fontSize: `${Math.random() * 20 + 20}px`,
-                filter: "drop-shadow(0 0 5px rgba(255,255,255,0.7))"
-            }}
-            initial={startPosition}
-            animate={{ x: endPosition.x, y: endPosition.y, rotate: [0, 180, 360], scale: [1, 1.2, 0.9, 1] }}
-            transition={{ duration: Math.random() * 30 + 20, delay, repeat: Infinity, repeatType: "reverse" }}
-        >
-            {emoji}
-        </motion.div>
-    );
-};
-
+// Replace the AsteroidButton with SpaceButton in the Home component
 export default function Home() {
     const [stars, setStars] = useState([]);
     const spaceEmojis = ['🚀', '🛸', '👽', '🪐', '💫', '✨', '☄️', '🌠', '🌌', '👨‍🚀', '👩‍🚀', '🤖', '👾', '🌟'];
@@ -94,6 +34,74 @@ export default function Home() {
         { top: '70%', left: '30%', color: 'radial-gradient(circle, rgba(244,114,182,1) 0%, rgba(219,39,119,0) 70%)', size: '350px', delay: 2 },
         { top: '10%', left: '70%', color: 'radial-gradient(circle, rgba(34,211,238,1) 0%, rgba(8,145,178,0) 70%)', size: '250px', delay: 1.5 },
     ];
+
+    // Component definitions for Star, NeonGlow, and SpaceCharacter remain the same
+    const Star = ({ delay = 0 }) => {
+        const size = Math.random() * 3 + 1;
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const duration = Math.random() * 3 + 2;
+        const color = [
+            'bg-cyan-300', 'bg-blue-300', 'bg-purple-300',
+            'bg-pink-300', 'bg-indigo-300'
+        ][Math.floor(Math.random() * 5)];
+
+        return (
+            <motion.div
+                className={`absolute rounded-full ${color} shadow-glow`}
+                style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    top: `${top}%`,
+                    left: `${left}%`,
+                    boxShadow: `0 0 8px 2px rgba(${color === 'bg-cyan-300' ? '6, 182, 212' :
+                        color === 'bg-blue-300' ? '59, 130, 246' :
+                            color === 'bg-purple-300' ? '168, 85, 247' :
+                                color === 'bg-pink-300' ? '236, 72, 153' : '99, 102, 241'}, 0.7)`
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
+                transition={{ duration, delay, repeat: Infinity, repeatType: "reverse" }}
+            />
+        );
+    };
+
+    const NeonGlow = ({ top, left, color, size, delay }) => (
+        <motion.div
+            className="absolute rounded-full blur-xl"
+            style={{
+                width: size,
+                height: size,
+                top,
+                left,
+                background: color,
+                opacity: 0.3
+            }}
+            initial={{ opacity: 0.2, scale: 0.8 }}
+            animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.1, 0.8] }}
+            transition={{ duration: 4, delay, repeat: Infinity }}
+        />
+    );
+
+    const SpaceCharacter = ({ emoji, delay = 0 }) => {
+        const startPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
+        const endPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
+
+        return (
+            <motion.div
+                className="absolute text-2xl"
+                style={{
+                    fontSize: `${Math.random() * 20 + 20}px`,
+                    filter: "drop-shadow(0 0 5px rgba(255,255,255,0.7))"
+                }}
+                initial={startPosition}
+                animate={{ x: endPosition.x, y: endPosition.y, rotate: [0, 180, 360], scale: [1, 1.2, 0.9, 1] }}
+                transition={{ duration: Math.random() * 30 + 20, delay, repeat: Infinity, repeatType: "reverse" }}
+            >
+                {emoji}
+            </motion.div>
+        );
+    };
 
     useEffect(() => {
         setStars(Array.from({ length: 150 }).map((_, i) => <Star key={i} delay={i * 0.01} />));
@@ -126,10 +134,9 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.5, type: "spring", stiffness: 100 }}
                         style={{
-                            backgroundImage: 'linear-gradient(to right, #22d3ee, #818cf8, #c084fc, #f472b6)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            textShadow: '0 0 20px rgba(139, 92, 246, 0.5)'
+                            color: '#67e8f9',
+                            textShadow: '0 0 10px #22d3ee, 0 0 20px #0ea5e9, 0 0 30px #38bdf8, 0 0 40px #0284c7',
+                            WebkitTextFillColor: '#67e8f9'
                         }}
                     >
                         <span>🌌</span> Galactic Code Academy <span>🪐</span>
@@ -161,16 +168,26 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.5, duration: 0.5 }}
                     >
-                        <AsteroidButton className="neon-shadow">Get Started</AsteroidButton>
+                        <SpaceButton className="button-pulse">Get Started</SpaceButton>
                     </motion.div>
                 </div>
             </div>
 
             {/* CSS for additional effects */}
             <style jsx global>{`
-        .neon-shadow {
-          box-shadow: 0 0 20px 8px rgba(139, 92, 246, 0.6), 0 0 40px 15px rgba(139, 92, 246, 0.3);
+        .button-pulse {
+          animation: buttonPulse 4s infinite alternate;
         }
+        
+        @keyframes buttonPulse {
+          0% {
+            box-shadow: 0 0 15px 2px rgba(34, 211, 238, 0.4), 0 0 30px 5px rgba(6, 182, 212, 0.3);
+          }
+          100% {
+            box-shadow: 0 0 20px 5px rgba(34, 211, 238, 0.6), 0 0 40px 10px rgba(6, 182, 212, 0.4);
+          }
+        }
+        
         .shadow-glow {
           filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
         }
@@ -182,6 +199,9 @@ export default function Home() {
         }
         .bg-gradient-radial {
           background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
+        }
+        .bg-noise {
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
       `}</style>
         </div>
