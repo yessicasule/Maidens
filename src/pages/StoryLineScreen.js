@@ -68,8 +68,10 @@ export default function StorylineScreen() {
                     <motion.p key={index} initial={{ y: 30, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: index * 0.2 }}
                         className="tracking-wide space-font mx-auto px-4"
-                        style={{ color: index === currentLine ? galaxyColors.yellow : galaxyColors.text,
-                                textShadow: `0 0 8px ${index === currentLine ? galaxyColors.yellow : galaxyColors.glow}` }}>
+                        style={{
+                            color: index === currentLine ? galaxyColors.yellow : galaxyColors.text,
+                            textShadow: `0 0 8px ${index === currentLine ? galaxyColors.yellow : galaxyColors.glow}`
+                        }}>
                         {line}
                     </motion.p>
                 ))}
@@ -91,15 +93,19 @@ export default function StorylineScreen() {
                         <motion.button whileHover={{ scale: 1.05, boxShadow: `0 0 15px ${galaxyColors.yellow}` }}
                             whileTap={{ scale: 0.98 }} className="px-10 py-4 rounded-lg font-bold text-xl space-font"
                             onClick={() => navigate("/spacemap")}
-                            style={{ background: "linear-gradient(135deg, #444, #111)", color: galaxyColors.yellow,
-                                    border: `2px solid ${galaxyColors.yellow}`, textAlign: "center" }}>
+                            style={{
+                                background: "linear-gradient(135deg, #444, #111)", color: galaxyColors.yellow,
+                                border: `2px solid ${galaxyColors.yellow}`, textAlign: "center"
+                            }}>
                             YES!! 🚀
                         </motion.button>
 
                         <motion.button whileHover={{ scale: 0.95, opacity: 0.7, y: 10, filter: "blur(1px)" }}
                             className="px-10 py-4 rounded-lg font-bold text-xl opacity-80 space-font"
-                            onClick={() => navigate("/spacemap")}
-                            style={{ background: "rgba(50, 50, 50, 0.5)", border: "2px solid #444", color: "#AAA" }}>
+                            style={{
+                                background: "rgba(50, 50, 50, 0.5)", border: "2px solid #444", color: "#AAA",
+                                pointerEvents: "none", cursor: "not-allowed"
+                            }}>
                             No (You have to say yes!!) 🙅‍♂️
                         </motion.button>
                     </div>
