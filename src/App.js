@@ -1,34 +1,17 @@
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
+import StorylineScreen from './pages/StoryLineScreen';
 
 
 function App() {
-
-
-
   return (
-    <>
-      <BrowserRouter>
-        <RoutesWeb />
-      </BrowserRouter>
-    </>
-  );
-}
-
-const RoutesWeb = () => {
-  const location = useLocation(); // Get the current route
-
-  return (
-    <>
-      {/* {loading && <Loader />} */}
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/storyline" element={<StorylineScreen />} />
       </Routes>
-      {/* {!isAdminRoute && <Footer />}       Conditionally render Footer */}
-    </>
+    </Router>
   );
-};
+}
 
 export default App;

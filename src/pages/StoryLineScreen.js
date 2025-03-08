@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from "../../components/ui/Button";
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const storyline = [
@@ -10,8 +10,9 @@ const storyline = [
     "Are you ready to power up the ship?"
 ];
 
-export default function StorylineScreen({ onNext }) {
+export default function StorylineScreen() {
     const [currentLine, setCurrentLine] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (currentLine < storyline.length - 1) {
@@ -22,23 +23,15 @@ export default function StorylineScreen({ onNext }) {
 
     return (
         <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 relative">
-            <div className="absolute inset-0 bg-stars animate-stars" />
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1.5 }}
-                className="text-center space-y-4 z-10"
-            >
+            <motion.div className="text-center space-y-4">
                 {storyline.slice(0, currentLine + 1).map((line, index) => (
-                    <p key={index} className="text-lg text-neon-green">
-                        {line}
-                    </p>
+                    <p key={index} className="text-lg text-neon-green">{line}</p>
                 ))}
 
                 {currentLine === storyline.length - 1 && (
-                    <Button className="bg-neon-green text-black w-full mt-4" onClick={onNext}>
+                    <button className="bg-neon-green text-black px-6 py-3 mt-4 rounded-lg font-bold" onClick={() => navigate('/next')}>
                         Begin Your Mission
-                    </Button>
+                    </button>
                 )}
             </motion.div>
         </div>

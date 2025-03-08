@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const AsteroidButton = ({ children, className }) => (
+const AsteroidButton = ({ children, className, onClick }) => (
     <motion.button
+        onClick={onClick}
         className={`relative px-8 py-4 rounded-full text-xl font-bold text-white shadow-xl overflow-hidden ${className}`}
         initial={{ scale: 0.9 }}
         whileHover={{ scale: 1.05, rotate: [0, -1, 1, -1, 0], transition: { duration: 0.3 } }}
@@ -18,107 +20,36 @@ const AsteroidButton = ({ children, className }) => (
     </motion.button>
 );
 
-const Star = ({ delay = 0 }) => {
-    const size = Math.random() * 3 + 1;
-    const top = Math.random() * 100;
-    const left = Math.random() * 100;
-    const duration = Math.random() * 3 + 2;
-    const color = [
-        'bg-cyan-300', 'bg-blue-300', 'bg-purple-300',
-        'bg-pink-300', 'bg-indigo-300'
-    ][Math.floor(Math.random() * 5)];
-
-    return (
-        <motion.div
-            className={`absolute rounded-full ${color} shadow-glow`}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                top: `${top}%`,
-                left: `${left}%`,
-                boxShadow: `0 0 8px 2px rgba(${color === 'bg-cyan-300' ? '6, 182, 212' :
-                    color === 'bg-blue-300' ? '59, 130, 246' :
-                        color === 'bg-purple-300' ? '168, 85, 247' :
-                            color === 'bg-pink-300' ? '236, 72, 153' : '99, 102, 241'}, 0.7)`
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
-            transition={{ duration, delay, repeat: Infinity, repeatType: "reverse" }}
-        />
-    );
-};
-
-const NeonGlow = ({ top, left, color, size, delay }) => (
-    <motion.div
-        className="absolute rounded-full blur-xl"
-        style={{
-            width: size,
-            height: size,
-            top,
-            left,
-            background: color,
-            opacity: 0.3
-        }}
-        initial={{ opacity: 0.2, scale: 0.8 }}
-        animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.1, 0.8] }}
-        transition={{ duration: 4, delay, repeat: Infinity }}
-    />
-);
-
-const SpaceCharacter = ({ emoji, delay = 0 }) => {
-    const startPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
-    const endPosition = { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
-
-    return (
-        <motion.div
-            className="absolute text-2xl"
-            style={{
-                fontSize: `${Math.random() * 20 + 20}px`,
-                filter: "drop-shadow(0 0 5px rgba(255,255,255,0.7))"
-            }}
-            initial={startPosition}
-            animate={{ x: endPosition.x, y: endPosition.y, rotate: [0, 180, 360], scale: [1, 1.2, 0.9, 1] }}
-            transition={{ duration: Math.random() * 30 + 20, delay, repeat: Infinity, repeatType: "reverse" }}
-        >
-            {emoji}
-        </motion.div>
-    );
-};
-
 export default function Home() {
+    const navigate = useNavigate();
     const [stars, setStars] = useState([]);
-    const spaceEmojis = ['🚀', '🛸', '👽', '🪐', '💫', '✨', '☄️', '🌠', '🌌', '👨‍🚀', '👩‍🚀', '🤖', '👾', '🌟'];
-    const neonGlows = [
-        { top: '20%', left: '10%', color: 'radial-gradient(circle, rgba(167,139,250,1) 0%, rgba(79,70,229,0) 70%)', size: '300px', delay: 0 },
-        { top: '50%', left: '80%', color: 'radial-gradient(circle, rgba(56,189,248,1) 0%, rgba(2,132,199,0) 70%)', size: '400px', delay: 1 },
-        { top: '70%', left: '30%', color: 'radial-gradient(circle, rgba(244,114,182,1) 0%, rgba(219,39,119,0) 70%)', size: '350px', delay: 2 },
-        { top: '10%', left: '70%', color: 'radial-gradient(circle, rgba(34,211,238,1) 0%, rgba(8,145,178,0) 70%)', size: '250px', delay: 1.5 },
-    ];
 
     useEffect(() => {
-        setStars(Array.from({ length: 150 }).map((_, i) => <Star key={i} delay={i * 0.01} />));
+        setStars(Array.from({ length: 150 }).map((_, i) => (
+            <motion.div
+                key={i}
+                className="absolute rounded-full bg-white shadow-glow"
+                style={{
+                    width: `${Math.random() * 3 + 1}px`,
+                    height: `${Math.random() * 3 + 1}px`,
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.2, 1] }}
+                transition={{ duration: Math.random() * 3 + 2, repeat: Infinity, repeatType: "reverse" }}
+            />
+        )));
     }, []);
 
     return (
         <div className="relative w-full h-screen overflow-hidden bg-black">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-950 via-blue-950 to-black opacity-90"></div>
 
-            {/* Neon glows */}
-            {neonGlows.map((glow, index) => (
-                <NeonGlow key={index} {...glow} />
-            ))}
-
             {/* Stars */}
             {stars}
 
-            {/* Space emojis */}
-            {spaceEmojis.map((emoji, index) => (
-                <SpaceCharacter key={index} emoji={emoji} delay={index * 0.5} />
-            ))}
-
             <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-radial from-transparent to-black opacity-40"></div>
-
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
                     <motion.h1
                         className="text-6xl md:text-7xl font-black mb-8 text-center flex items-center gap-3 heading-glow"
@@ -161,29 +92,24 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.5, duration: 0.5 }}
                     >
-                        <AsteroidButton className="neon-shadow">Get Started</AsteroidButton>
+                        <AsteroidButton className="neon-shadow" onClick={() => navigate('/storyline')}>
+                            Get Started
+                        </AsteroidButton>
                     </motion.div>
                 </div>
             </div>
 
-            {/* CSS for additional effects */}
             <style jsx global>{`
-        .neon-shadow {
-          box-shadow: 0 0 20px 8px rgba(139, 92, 246, 0.6), 0 0 40px 15px rgba(139, 92, 246, 0.3);
-        }
-        .shadow-glow {
-          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-        }
-        .text-shadow {
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-        .heading-glow {
-          filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.7));
-        }
-        .bg-gradient-radial {
-          background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
-        }
-      `}</style>
+                .neon-shadow {
+                    box-shadow: 0 0 20px 8px rgba(139, 92, 246, 0.6), 0 0 40px 15px rgba(139, 92, 246, 0.3);
+                }
+                .shadow-glow {
+                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+                }
+                .heading-glow {
+                    filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.7));
+                }
+            `}</style>
         </div>
     );
 }
