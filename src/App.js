@@ -1,28 +1,18 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import StorylineScreen from './pages/StoryLineScreen';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'; // Updated path
+import StoryLineScreen from './pages/StoryLineScreen'; // Updated path (matching your filename)
+import SpaceMap from './pages/SpaceMap'; // Updated path
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <AppRoutes />
-    </Router>
-  );
-}
-
-const AppRoutes = () => {
-  const location = useLocation(); // Get the current route
-  
-  return (
-    <>
-      {/* {loading && <Loader />} */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/storyline" element={<StorylineScreen />} />
+        <Route path="/storyline" element={<StoryLineScreen />} />
+        <Route path="/spacemap" element={<SpaceMap />} />
       </Routes>
-      {/* {!isAdminRoute && <Footer />} 
-      Conditionally render Footer */}
-    </>
+    </Router>
   );
 };
 
