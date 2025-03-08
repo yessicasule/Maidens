@@ -1,5 +1,6 @@
 import './App.css';
 import Home from './pages/Home';
+import StorylineScreen from './pages/StoryLineScreen';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 
@@ -25,6 +26,7 @@ const RoutesWeb = () => {
       {/* {loading && <Loader />} */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/storyline" element = {<StorylineScreen/>}></>
       </Routes>
       {/* {!isAdminRoute && <Footer />}       Conditionally render Footer */}
     </>
